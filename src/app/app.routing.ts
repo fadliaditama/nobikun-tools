@@ -9,15 +9,15 @@ import { InitialDataResolver } from 'app/app.resolvers';
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 export const appRoutes: Route[] = [
 
-    // Redirect empty path to '/dashboards/project'
-    { path: '', pathMatch: 'full', redirectTo: 'dashboards/project' },
+    // Redirect empty path to '/home'
+    { path: '', pathMatch: 'full', redirectTo: 'home' },
 
     // Redirect signed in user to the '/dashboards/project'
     //
     // After the user signs in, the sign in page will redirect the user to the 'signed-in-redirect'
     // path. Below is another redirection for that path to redirect the user to the desired
     // location. This is a small convenience to keep all main routes together here on this file.
-    { path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'dashboards/project' },
+    // { path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'dashboards/project' },
 
     // Auth routes for guests
     {
@@ -38,7 +38,7 @@ export const appRoutes: Route[] = [
     },
 
     // Redirect login to sign-in
-    { path: 'login', pathMatch: 'full', redirectTo: 'sign-in' },
+    // { path: 'login', pathMatch: 'full', redirectTo: 'sign-in' },
 
     // Auth routes for authenticated users
     {
@@ -59,8 +59,11 @@ export const appRoutes: Route[] = [
     {
         path: '',
         component: LayoutComponent,
+        resolve: {
+            initialData: InitialDataResolver,
+        },
         data: {
-            layout: 'empty'
+            layout: 'modern'
         },
         children: [
             { path: 'home', loadChildren: () => import('app/modules/landing/home/home.module').then(m => m.LandingHomeModule) },
